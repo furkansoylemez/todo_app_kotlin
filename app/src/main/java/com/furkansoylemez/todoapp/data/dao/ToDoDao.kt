@@ -1,7 +1,6 @@
 package com.furkansoylemez.todoapp.data.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -19,7 +18,6 @@ interface ToDoDao {
 
     @Update
     suspend fun updateItem(toDoItem: ToDoItem)
-
-    @Delete
-    suspend fun deleteItem(toDoItem: ToDoItem)
+    @Query("DELETE FROM todo_items WHERE id = :id")
+    suspend fun deleteItemById(id: Int)
 }
