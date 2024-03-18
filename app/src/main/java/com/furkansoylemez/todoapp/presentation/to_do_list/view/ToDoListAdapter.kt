@@ -9,12 +9,13 @@ import com.furkansoylemez.todoapp.R
 import com.furkansoylemez.todoapp.databinding.ItemToDoTaskBinding
 import com.furkansoylemez.todoapp.domain.model.ToDoTask
 
-class ToDoListAdapter : ListAdapter<ToDoTask, ToDoListAdapter.ToDoTaskViewHolder>(DiffCallback) {
+class ToDoListAdapter(private val onCheckClick: (ToDoTask) -> Unit) :
+    ListAdapter<ToDoTask, ToDoListAdapter.ToDoTaskViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoTaskViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemToDoTaskBinding.inflate(layoutInflater, parent, false)
-        return ToDoTaskViewHolder(binding)
+        return ToDoTaskViewHolder(binding, onCheckClick)
     }
 
     override fun onBindViewHolder(holder: ToDoTaskViewHolder, position: Int) {
@@ -22,7 +23,10 @@ class ToDoListAdapter : ListAdapter<ToDoTask, ToDoListAdapter.ToDoTaskViewHolder
         holder.bind(task)
     }
 
-    class ToDoTaskViewHolder(private val binding: ItemToDoTaskBinding) :
+    class ToDoTaskViewHolder(
+        private val binding: ItemToDoTaskBinding,
+        private val onCheckClick: (ToDoTask) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(task: ToDoTask) {
@@ -32,6 +36,9 @@ class ToDoListAdapter : ListAdapter<ToDoTask, ToDoListAdapter.ToDoTaskViewHolder
                 if (task.isCompleted) R.drawable.ic_check_circle_24
                 else R.drawable.ic_check_circle_outline_24
             )
+            binding.taskStatus.setOnClickListener {
+                onCheckClick(task)
+            }
         }
     }
 
