@@ -9,13 +9,13 @@ import com.furkansoylemez.todoapp.R
 import com.furkansoylemez.todoapp.databinding.ItemToDoTaskBinding
 import com.furkansoylemez.todoapp.domain.model.ToDoTask
 
-class ToDoListAdapter(private val onCheckClick: (ToDoTask) -> Unit) :
+class ToDoListAdapter(private val onCheckClick: (ToDoTask) -> Unit,private val onItemDelete: (ToDoTask) -> Unit) :
     ListAdapter<ToDoTask, ToDoListAdapter.ToDoTaskViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoTaskViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemToDoTaskBinding.inflate(layoutInflater, parent, false)
-        return ToDoTaskViewHolder(binding, onCheckClick)
+        return ToDoTaskViewHolder(binding, onCheckClick,onItemDelete)
     }
 
     override fun onBindViewHolder(holder: ToDoTaskViewHolder, position: Int) {
@@ -25,7 +25,8 @@ class ToDoListAdapter(private val onCheckClick: (ToDoTask) -> Unit) :
 
     class ToDoTaskViewHolder(
         private val binding: ItemToDoTaskBinding,
-        private val onCheckClick: (ToDoTask) -> Unit
+        private val onCheckClick: (ToDoTask) -> Unit,
+        private val onItemDelete: (ToDoTask) -> Unit
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -38,6 +39,9 @@ class ToDoListAdapter(private val onCheckClick: (ToDoTask) -> Unit) :
             )
             binding.taskStatus.setOnClickListener {
                 onCheckClick(task)
+            }
+            binding.taskDelete.setOnClickListener {
+                onItemDelete(task)
             }
         }
     }
