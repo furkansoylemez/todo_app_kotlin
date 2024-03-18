@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/toDoListFragment"
         android:name="com.furkansoylemez.todoapp.presentation.to_do_list.view.ToDoListFragment"
-        android:label="ToDoListFragment" />
+        android:label="ToDoListFragment" >
+        <action
+            android:id="@+id/action_toDoListFragment_to_addToDoDialogFragment"
+            app:destination="@id/addToDoDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/addToDoDialogFragment"
+        android:name="com.furkansoylemez.todoapp.presentation.to_do_list.view.AddToDoDialogFragment"
+        android:label="AddToDoDialogFragment" />
 </navigation>

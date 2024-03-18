@@ -2,6 +2,8 @@ package com.furkansoylemez.todoapp.presentation.to_do_list.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.furkansoylemez.todoapp.domain.model.ToDoTask
+import com.furkansoylemez.todoapp.domain.usecase.AddToDoTaskUseCase
 import com.furkansoylemez.todoapp.domain.usecase.GetToDoTasksUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ToDoListViewModel @Inject constructor(
-    private val getToDoTasksUseCase: GetToDoTasksUseCase
+    private val getToDoTasksUseCase: GetToDoTasksUseCase,
+    private val addToDoTaskUseCase: AddToDoTaskUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ToDoListState())
@@ -34,6 +37,13 @@ class ToDoListViewModel @Inject constructor(
                         currentState.copy(isLoading = false, tasks = tasks, error = null)
                     }
                 }
+        }
+    }
+
+    fun addTask(title: String, description: String) {
+        val newTask = ToDoTask(title = title, description = description, isCompleted = false)
+        viewModelScope.launch {
+            addToDoTaskUseCase(newTask)
         }
     }
 }
