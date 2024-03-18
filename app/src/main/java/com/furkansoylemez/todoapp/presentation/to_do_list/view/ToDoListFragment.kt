@@ -72,6 +72,8 @@ class ToDoListFragment : Fragment() {
         toDoListAdapter = ToDoListAdapter(onCheckClick = { task ->
             val updatedTask = task.copy(isCompleted = !task.isCompleted)
             viewModel.updateTask(updatedTask)
+        }, onItemDelete = { task ->
+            viewModel.deleteTask(task)
         })
         binding.toDoListRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)

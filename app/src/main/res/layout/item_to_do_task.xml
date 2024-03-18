@@ -6,14 +6,25 @@
     android:layout_height="wrap_content"
     android:padding="16dp">
 
+    <ImageView
+        android:id="@+id/taskStatus"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_check_circle_outline_24" />
+
     <TextView
         android:id="@+id/taskTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/taskStatus"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/taskDelete"
+        app:layout_constraintStart_toEndOf="@+id/taskStatus"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Task Title" />
 
@@ -28,12 +39,11 @@
         tools:text="Task description goes here. This is a sample description." />
 
     <ImageView
-        android:id="@+id/taskStatus"
+        android:id="@+id/taskDelete"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="@id/taskTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/taskTitle"
-        app:srcCompat="@drawable/ic_check_circle_outline_24" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_delete_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>
