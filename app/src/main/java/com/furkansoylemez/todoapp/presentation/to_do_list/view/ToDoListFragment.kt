@@ -67,8 +67,12 @@ class ToDoListFragment : Fragment() {
             findNavController().navigate(R.id.action_toDoListFragment_to_addToDoDialogFragment)
         }
     }
+
     private fun setupRecyclerView() {
-        toDoListAdapter = ToDoListAdapter()
+        toDoListAdapter = ToDoListAdapter(onCheckClick = { task ->
+            val updatedTask = task.copy(isCompleted = !task.isCompleted)
+            viewModel.updateTask(updatedTask)
+        })
         binding.toDoListRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = toDoListAdapter
@@ -88,8 +92,6 @@ class ToDoListFragment : Fragment() {
             }
         }
     }
-
-
 
 
 }
