@@ -5,4 +5,5 @@
     <string name="add_to_do_dialog_title">Add New To-Do</string>
     <string name="add_to_do_dialog_add_text">Add</string>
     <string name="add_to_do_dialog_cancel_text">Cancel</string>
+    <string name="todo_list">ToDo List</string>
 </resources>

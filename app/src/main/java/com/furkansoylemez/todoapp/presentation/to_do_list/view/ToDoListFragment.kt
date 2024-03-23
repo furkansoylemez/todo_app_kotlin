@@ -56,16 +56,20 @@ class ToDoListFragment : Fragment() {
 
     private fun setupButtons() {
         binding.addToDoFloatingActionButton.setOnClickListener {
-            setFragmentResultListener("addRequestKey") { requestKey, bundle ->
-                clearFragmentResultListener(requestKey)
-                val title = bundle.getString("title", "")
-                val description = bundle.getString("description", "")
-                if (title.isNotEmpty() && description.isNotEmpty()) {
-                    viewModel.addTask(title, description)
-                }
-            }
-            findNavController().navigate(R.id.action_toDoListFragment_to_addToDoDialogFragment)
+            showAddToDoDialog()
         }
+    }
+
+    private fun showAddToDoDialog() {
+        setFragmentResultListener("addRequestKey") { requestKey, bundle ->
+            clearFragmentResultListener(requestKey)
+            val title = bundle.getString("title", "")
+            val description = bundle.getString("description", "")
+            if (title.isNotEmpty() && description.isNotEmpty()) {
+                viewModel.addTask(title, description)
+            }
+        }
+        findNavController().navigate(R.id.action_toDoListFragment_to_addToDoDialogFragment)
     }
 
     private fun setupRecyclerView() {
