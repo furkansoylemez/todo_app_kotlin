@@ -1,0 +1,40 @@
+package com.furkansoylemez.todoapp.domain.usecase
+
+import com.furkansoylemez.todoapp.domain.model.ToDoTask
+import com.furkansoylemez.todoapp.domain.repository.ToDoRepository
+import kotlinx.coroutines.test.runTest
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
+import org.mockito.junit.MockitoJUnitRunner
+
+@RunWith(MockitoJUnitRunner::class)
+class AddToDoTaskUseCaseTest {
+
+    @Mock
+    private lateinit var toDoRepository: ToDoRepository
+
+    private lateinit var addToDoTaskUseCase: AddToDoTaskUseCase
+
+    @Before
+    fun setUp() {
+        addToDoTaskUseCase = AddToDoTaskUseCase(toDoRepository)
+    }
+
+    @Test
+    fun `invoke calls repository insertTask method`() = runTest {
+        // Arrange
+        val toDoTask = ToDoTask(1, "Sample", "Sample Description", false)
+        `when`(toDoRepository.insertTask(toDoTask)).thenReturn(mock())
+
+        // Act
+        addToDoTaskUseCase(toDoTask)
+
+        // Assert
+        verify(toDoRepository).insertTask(toDoTask)
+    }
+}
