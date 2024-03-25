@@ -14,4 +14,4 @@ This app serves as a basic showcase for fundamental Android development practice
 - **Mockito & Mockito-Kotlin:** Facilitates the mocking of dependencies, allowing for isolated and focused unit tests.
 - **Turbine:** A testing library specifically designed for Kotlin Flows, making flow testing more straightforward and effective.
 
-![App Demo](app_demo.gif)
+<img src="app_demo.gif" width="270">
