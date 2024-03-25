@@ -8,10 +8,10 @@ import com.furkansoylemez.todoapp.domain.usecase.DeleteToDoTaskUseCase
 import com.furkansoylemez.todoapp.domain.usecase.GetToDoTasksUseCase
 import com.furkansoylemez.todoapp.domain.usecase.UpdateToDoTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,26 +22,16 @@ class ToDoListViewModel @Inject constructor(
     private val updateToDoTaskUseCase: UpdateToDoTaskUseCase,
     private val deleteToDoTaskUseCase: DeleteToDoTaskUseCase
 ) : ViewModel() {
-
-    private val _uiState = MutableStateFlow(ToDoListState())
-    val uiState: StateFlow<ToDoListState> = _uiState
+    var uiState: StateFlow<ToDoListState>
 
     init {
-        fetchToDoTasks()
-    }
-
-    private fun fetchToDoTasks() {
-        viewModelScope.launch {
-            _uiState.value = ToDoListState(isLoading = true)
-            getToDoTasksUseCase()
-                .catch { e ->
-                    _uiState.value = ToDoListState(error = e.message)
-                }.collect { tasks ->
-                    _uiState.update { currentState ->
-                        currentState.copy(isLoading = false, tasks = tasks, error = null)
-                    }
-                }
-        }
+        uiState = getToDoTasksUseCase().map { toDos ->
+            ToDoListState.Success(toDos)
+        }.stateIn(
+            scope = viewModelScope,
+            initialValue = ToDoListState.Loading,
+            started = SharingStarted.WhileSubscribed(3000)
+        )
     }
 
     fun addTask(title: String, description: String) {
