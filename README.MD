@@ -2,7 +2,7 @@
 
 ## Overview
 
-This app serves as a basic showcase for fundamental Android development practices. Designed with a focus on simplicity and functionality. It is ideal for developers looking to understand the basics of Android application development, including the use of modern architecture components and testing strategies.
+This app serves as a basic showcase for traditional(Layouts, Fragments etc.) Android development practices. Designed with a focus on simplicity and functionality. It is ideal for developers looking to understand the basics of traditional Android application development, including the use of modern architecture components and testing strategies.
 
 ### Implemented Technologies
 
